@@ -33,6 +33,9 @@ type FormData = {
   eventTypes: Event[];
 };
 
+const axiosInstance = axios.create({
+    baseURL: "https://port-4000-nodejs-blue-vulture-topi9864290159.codeanyapp.com"
+  });
 function App() {
   const [formData, setFormData] = useState<FormData>({
     payloadUrl: '',
@@ -42,7 +45,7 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post('/api/webhooks', {
+    axiosInstance.post(`/api/webhooks`, {
       ...formData,
       eventTypes: formData.eventTypes
         .filter((item) => item.checked)
@@ -70,9 +73,9 @@ function App() {
   };
 
   const handleEventHappened = (key: string) => {
-    axios.post('/api/event-emulate', {
+    axiosInstance.post(`/api/event-emulate`, {
       type: key,
-      data: { eventType: key, initiator: 'Rakesh K' },
+      data: { eventType: key, initiator: 'Prabhat Singh' },
     });
   };
 
